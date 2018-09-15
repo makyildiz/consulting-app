@@ -1,5 +1,5 @@
-// const {mongoose} = require('./db/connection');
-const {MongoClient} = require('./db/connection');
+const {mongoose} = require('./db/connection');
+// const {MongoClient} = require('./db/connection');
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -14,14 +14,27 @@ app.get('/', (req, res) => {
 })
 
 app.post('/customers', (req, res) => {
+  var body = req.body;
   var customer = new Customer({
-    invoiceName: req.body.invoiceName,
-    reportName: req.body.reportName,
-    "address.text" : req.body.address.text
+    invoiceName: body.invoiceName,
+    reportName: body.reportName,
+    "address.text" : body.address.text,
+    "address.area" : body.address.area,
+    "address.town" : body.address.town,
+    "address.city" : body.address.city,
+    "address.postalCode" : body.address.postalCode,
+    "address.country" : body.address.country,
+    taxOffice: body.taxOffice,
+    taxNumber: body.taxNumber,
+    phone: body.phone
   });
-  res.send(customer);
 
-  
+  customer.save().then((doc) => {
+      res.send(doc);
+  }, (e) => {
+    res.status(400).send(e);
+  });
+
 });
 
 

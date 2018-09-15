@@ -17,6 +17,7 @@ var customerSchema = new Schema({
   address: {
     text: String,
     area: String,
+    town: String,
     city: String,
     postalCode: Number,
     country: String
