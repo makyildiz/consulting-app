@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 var {Customer} = require('./models/customer');
+var {Servant} = require('./models/servant');
 
 const app = express();
 
@@ -34,7 +35,22 @@ app.post('/customers', (req, res) => {
   }, (e) => {
     res.status(400).send(e);
   });
+});
 
+app.post('/servants', (req, res) => {
+  var body = req.body;
+  var servant = new Servant({
+    name: body.name,
+    phone: body.phone,
+    'expertise.area': body.expertise.area,
+    'expertise.level': body.expertise.level
+  });
+
+  servant.save().then((doc) => {
+    res.send(doc);
+  },(e) => {
+    res.status(400).send(e);
+  });
 });
 
 
