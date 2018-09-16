@@ -15,7 +15,9 @@ var servantSchema = new Schema({
   expertise: {
     area: String,
     level: Number
-  }
+  },
+  office: String,
+  superior: String
 });
 
 var Servant = mongoose.model('Servant', servantSchema);

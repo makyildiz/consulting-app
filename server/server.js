@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 
 var {Customer} = require('./models/customer');
 var {Servant} = require('./models/servant');
+var {Project} = require('./models/project');
 
 const app = express();
 
@@ -51,6 +52,20 @@ app.post('/servants', (req, res) => {
   },(e) => {
     res.status(400).send(e);
   });
+});
+
+app.post('/projects', (req, res) => {
+  var body = req.body;
+  var project = new Project({
+    name: body.name,
+    customer: body.customer
+  });
+
+  project.save().then((doc) => {
+    res.send(doc);
+  },(e) => {
+    res.status(400).send(e);
+  })
 });
 
 
